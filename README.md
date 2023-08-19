@@ -10,6 +10,11 @@ PR da participação: [github.com/zanfranceschi/rinha-de-backend-2023-q3/pull/79
 
 ### Primeiros passos
 
+#### Preparar ambiente com o gatling
+```shell
+make setup
+```
+
 #### Subir a aplicação
 ```shell
 make up
@@ -18,4 +23,9 @@ make up
 #### Executar os testes
 ```shell
 make test
+```
+
+#### Executar os testes de stress
+```shell
+make stress
 ```
