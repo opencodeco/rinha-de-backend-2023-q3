@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of OpenCodeCo.
  *
@@ -12,16 +13,12 @@ declare(strict_types=1);
 
 namespace App\Request;
 
-use App\Model\Person;
 use Hyperf\Codec\Json;
 use Hyperf\Validation\Request\FormRequest;
 use Ramsey\Uuid\Uuid;
 
 final class PersonRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -29,6 +26,7 @@ final class PersonRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @see https://github.com/zanfranceschi/rinha-de-backend-2023-q3/blob/main/INSTRUCOES.md#cria%C3%A7%C3%A3o-de-pessoas
      */
     public function rules(): array
@@ -43,8 +41,8 @@ final class PersonRequest extends FormRequest
 
     public function toPerson(): array
     {
-        $data = $this->validated();
-        
+        $data = $this->all();
+
         return [
             'id' => Uuid::uuid4()->toString(),
             'nick' => $data['apelido'],

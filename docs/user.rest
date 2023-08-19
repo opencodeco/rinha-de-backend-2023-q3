@@ -1,0 +1,22 @@
+### Get user by id
+GET http://localhost:9999/pessoas/1
+Content-Type: application/json
+
+### Count users
+GET http://localhost:9999/contagem-pessoas
+Content-Type: application/json
+
+### Create user
+POST http://localhost:9999/pessoas
+Content-Type: application/json
+
+{
+  "apelido": "José",
+  "nome": "José Roberto",
+  "nascimento": "2000-10-01",
+  "stack": [
+    "C#",
+    "Node",
+    "Oracle"
+  ]
+}

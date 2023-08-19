@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of OpenCodeCo.
  *
@@ -15,56 +16,44 @@ namespace App\Controller;
 use App\Job\PersonJob;
 use App\Model\Person;
 use App\Request\PersonRequest;
-use Hyperf\AsyncQueue\Driver\DriverFactory;
-use Hyperf\AsyncQueue\Driver\DriverInterface;
+use Hyperf\AsyncQueue\Driver\DriverInterface as QueueInterface;
+use Hyperf\Cache\Cache as CacheInterface;
 use Hyperf\Database\Model\Builder;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
-use Hyperf\Redis\Redis;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 
-final class PersonController
+final readonly class PersonController
 {
-    private DriverInterface $driver;
-
     public function __construct(
-        private Redis $redis,
-        DriverFactory $driverFactory
+        private CacheInterface $cache,
+        private QueueInterface $queue
     ) {
-        $this->driver = $driverFactory->get('default');
     }
 
-    /**
-     * @throws \Throwable
-     */
     public function create(PersonRequest $request, ResponseInterface $response): MessageResponseInterface
     {
         $person = $request->toPerson();
 
-        if ($this->redis->get($person['nick'])) {
+        if ($this->cache->get($person['nick'])) {
             return $response->json(['message' => 'Esse apelido já existe'])->withStatus(422);
         }
 
-        $this->driver->push(new PersonJob($person));
+        $this->queue->push(new PersonJob($person));
 
-//
-
-        $this->redis->set($person['nick'], '.');
-        $this->redis->set($person['id'], json_encode($person));
+        $this->cache->set($person['nick'], '.');
+        $this->cache->set($person['id'], json_encode($person));
 
         return $response->json($person)->withStatus(201)->withHeader('Location', "/pessoas/{$person['id']}");
     }
 
     public function show(RequestInterface $request, ResponseInterface $response, string $id): MessageResponseInterface
     {
-        $cached = $this->redis->get($id);
-        if ($cached) {
-
-            $person = json_decode($cached);
-
-            return $response->json($person);
+        if ($cached = $this->cache->get($id)) {
+            return $response->json(json_decode($cached));
         }
-        $response->raw('Not found')->withStatus(404);
+
+        return $response->raw('Not found')->withStatus(404);
     }
 
     public function search(RequestInterface $request, ResponseInterface $response): MessageResponseInterface
@@ -85,7 +74,6 @@ final class PersonController
 
     public function count(RequestInterface $request, ResponseInterface $response): MessageResponseInterface
     {
-        $count = Person::count();
-        return $response->json(['count' => $count]);
+        return $response->json(['count' => Person::count()]);
     }
 }

@@ -65,7 +65,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => '',
                 'nascimento' => '2023-07-01',
             ],
@@ -82,7 +82,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => null,
                 'nascimento' => '2023-07-01',
             ],
@@ -99,7 +99,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => 'OpenCodeCo',
                 'nascimento' => '',
             ],
@@ -116,7 +116,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => 'OpenCodeCo',
                 'nascimento' => null,
             ],
@@ -133,7 +133,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => 'OpenCodeCo',
                 'nascimento' => '01-07-2023',
             ],
@@ -150,7 +150,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => 'OpenCodeCo',
                 'nascimento' => '2023-07-01',
             ],
@@ -167,7 +167,7 @@ final class CreatePersonTest extends HttpTestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'apelido' => 'opencodeco',
+                'apelido' => $this->randString(),
                 'nome' => 'OpenCodeCo',
                 'nascimento' => '2023-07-01',
                 'stack' => ['PHP', 'Swoole', 'Hyperf'],
@@ -175,5 +175,10 @@ final class CreatePersonTest extends HttpTestCase
         ]);
 
         assertSame(201, $response->getStatusCode(), $response->getBody()->getContents());
+    }
+
+    protected function randString(): string
+    {
+        return str_pad(bin2hex(random_bytes(10)), 10);
     }
 }

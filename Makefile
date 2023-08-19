@@ -6,7 +6,7 @@ default: build push
 	cp .env.example .env
 
 vendor/autoload.php:
-	docker compose exec app composer install
+	docker compose exec api1 composer install
 
 .PHONY: build
 build:
@@ -22,4 +22,4 @@ up: .env
 
 .PHONY: test
 test: vendor/autoload.php
-	docker compose exec app composer test
+	docker compose exec api1 composer test

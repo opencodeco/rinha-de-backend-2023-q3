@@ -12,7 +12,7 @@
     "description": "Swoole e Hyperf na Rinha de Back-end.",
     "license": "MIT",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.2",
         "hyperf/async-queue": "^3.0",
         "hyperf/cache": "^3.0",
         "hyperf/command": "^3.0",

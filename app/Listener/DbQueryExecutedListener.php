@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of OpenCodeCo.
  *
@@ -23,10 +24,7 @@ use Psr\Log\LoggerInterface;
 #[Listener]
 class DbQueryExecutedListener implements ListenerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(ContainerInterface $container)
     {
@@ -41,13 +39,13 @@ class DbQueryExecutedListener implements ListenerInterface
     }
 
     /**
-     * @param QueryExecuted $event
+     * @param QueryExecuted&object $event
      */
     public function process(object $event): void
     {
         if ($event instanceof QueryExecuted) {
             $sql = $event->sql;
-            if (! Arr::isAssoc($event->bindings)) {
+            if (!Arr::isAssoc($event->bindings)) {
                 $position = 0;
                 foreach ($event->bindings as $value) {
                     $position = strpos($sql, '?', $position);

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of OpenCodeCo.
  *
@@ -12,11 +13,13 @@ declare(strict_types=1);
 
 namespace Test;
 
+use Hyperf\DbConnection\Db;
 use Hyperf\Testing\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class HttpTestCase.
+ *
  * @method get($uri, $data = [], $headers = [])
  * @method post($uri, $data = [], $headers = [])
  * @method json($uri, $data = [], $headers = [])
@@ -25,19 +28,28 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class HttpTestCase extends TestCase
 {
-    /**
-     * @var Client
-     */
-    protected $client;
+    protected Client $client;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->client = make(Client::class);
+        $this->client = \Hyperf\Support\make(Client::class);
     }
 
     public function __call($name, $arguments)
     {
         return $this->client->{$name}(...$arguments);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Db::beginTransaction();
+    }
+
+    protected function tearDown(): void
+    {
+        Db::rollBack();
+        parent::tearDown();
     }
 }

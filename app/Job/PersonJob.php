@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/**
+ * This file is part of OpenCodeCo.
+ *
+ * @link     https://github.com/opencodeco/rinha-de-backend-2023-q3
+ * @document https://github.com/opencodeco/rinha-de-backend-2023-q3/wiki
+ * @contact  https://github.com/opencodeco/rinha-de-backend-2023-q3/discussions
+ * @license  https://github.com/opencodeco/rinha-de-backend-2023-q3/blob/dev/LICENSE
+ */
+
 namespace App\Job;
 
 use Hyperf\AsyncQueue\Job;
@@ -9,15 +18,12 @@ use Hyperf\DbConnection\Db;
 
 class PersonJob extends Job
 {
-    public $params;
-
-    public function __construct($params)
-    {
-        // It's best to use normal data here. Don't pass the objects that carry IO, such as PDO objects.
-        $this->params = $params;
+    public function __construct(
+        public readonly array $params
+    ) {
     }
 
-    public function handle()
+    public function handle(): void
     {
         Db::table('person')->insert($this->params);
     }
