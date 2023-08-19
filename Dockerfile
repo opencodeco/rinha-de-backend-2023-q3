@@ -20,6 +20,8 @@ ENV TIMEZONE=${timezone:-"Asia/Shanghai"} \
 
 # update
 RUN set -ex \
+    && apk --no-cache add \
+    && apk add php82-pdo_pgsql \
     # show php version and extensions
     && php -v \
     && php -m \

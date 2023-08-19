@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70395e32b08664a1a7f30bcd30136250",
+    "content-hash": "f9a2c8f2d651158bd4bd9a04970f2a36",
     "packages": [
         {
             "name": "brick/math",
@@ -1570,6 +1570,63 @@
                 "source": "https://github.com/hyperf/hyperf"
             },
             "time": "2023-07-17T12:16:22+00:00"
+        },
+        {
+            "name": "hyperf/database-pgsql",
+            "version": "v3.0.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/database-pgsql.git",
+                "reference": "d84e4c61c74d767d75138345fdeb52882407e306"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/database-pgsql/zipball/d84e4c61c74d767d75138345fdeb52882407e306",
+                "reference": "d84e4c61c74d767d75138345fdeb52882407e306",
+                "shasum": ""
+            },
+            "require": {
+                "ext-swoole": ">=5.0",
+                "hyperf/collection": "~3.0.0",
+                "hyperf/database": "~3.0.0",
+                "hyperf/support": "~3.0.0",
+                "hyperf/tappable": "~3.0.0",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.0-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Database\\PgSQL\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Database\\PgSQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A pgsql handler for hyperf/database.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "database",
+                "hyperf",
+                "pgsql",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2023-05-31T02:10:17+00:00"
         },
         {
             "name": "hyperf/db-connection",
@@ -8724,7 +8781,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0"
+        "php": ">=8.2"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

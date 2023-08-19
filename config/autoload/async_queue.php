@@ -1,10 +1,20 @@
 <?php
 
+use Hyperf\AsyncQueue\Driver\RedisDriver;
+
 return [
     'default' => [
-        'driver' => Hyperf\AsyncQueue\Driver\RedisDriver::class,
-        'channel' => 'queue',
+        'driver' => RedisDriver::class,
+        'redis' => [
+            'pool' => 'default',
+        ],
+        'channel' => '{queue}',
+        'timeout' => 2,
         'retry_seconds' => 5,
-        'processes' => 1,
+        'handle_timeout' => 10,
+        'processes' => 2,
+        'concurrent' => [
+            'limit' => 1,
+        ],
     ],
 ];
