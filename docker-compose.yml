@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.9'
 
 services:
   api1: &api
@@ -8,9 +8,8 @@ services:
       context: .
       args:
         APP_STAGE: dev
-    environment:
-      DB_HOST: db
-      REDIS_HOST: cache
+    env_file:
+      - .env
     volumes:
       - ./:/opt/www
     depends_on:
@@ -42,6 +41,25 @@ services:
         limits:
           cpus: '0.65'
           memory: '1.0GB'
+
+    # postgres
+  postgres:
+    container_name: rinha-de-backend-postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      PGDATA: /var/lib/postgresql/data/db-files/
+    volumes:
+      - ./migration-postgres.sql:/docker-entrypoint-initdb.d/ddl.sql
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: '0.7GB'
 
   cache:
     container_name: rinha-de-backend-cache
