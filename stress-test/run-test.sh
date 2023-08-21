@@ -5,8 +5,7 @@
 # curl -v "http://localhost:9999/contagem-pessoas"
 
 GATLING_BIN_DIR=$HOME/gatling/3.9.5/bin
-
-WORKSPACE=$HOME/projects/rinha-de-backend-2023-q3/stress-test
+WORKSPACE=$(dirname $(realpath $0))
 
 sh $GATLING_BIN_DIR/gatling.sh -rm local -s RinhaBackendSimulation \
     -rd "DESCRICAO" \
