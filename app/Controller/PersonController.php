@@ -44,7 +44,7 @@ final readonly class PersonController
         $this->cache->set($person['nick'], '.');
         $this->cache->set($person['id'], json_encode($person));
 
-        return $response->json($person)->withStatus(201);
+        return $response->json($person)->withStatus(201)->withHeader('Location', "/pessoas/{$person['id']}");
     }
 
     public function show(RequestInterface $request, ResponseInterface $response, string $id): MessageResponseInterface
